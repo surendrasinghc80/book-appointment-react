@@ -15,7 +15,7 @@ const Booking = () => {
     return (
         <>
             <Header />
-            <div className='overflow-hidden flex flex-col justify-center items-center h-screen bg-linear-to-r from-white from-50% to-[#0451cd] to-50%'>
+            <div className='overflow-hidden flex flex-col justify-center items-center h-screen bg-linear-to-r from-white to-[#0451cd]'>
                 <div className='w-[80vw] md:w-[70vw] flex items-center justify-center flex-col md:flex-row'>
                     <div className="image h-[30%] w-full md:w-[50%] md:h-full">
                         <img className='h-full w-full' src='https://images.axios.com/rseGAk89vuIlIcOMwtFzdPfRUzI=/117x0:1197x1080/1600x1600/2023/01/17/1673986436931.jpg' alt='image' />
@@ -39,24 +39,20 @@ const Booking = () => {
                                 <input className='text-lg p-1 px-2 border-2 border-black rounded-md' id='email' name='email' value={credentials.email} type='email' placeholder='john@doe.com' required onChange={handleChange} />
                             </div>
 
-                            <div className='flex justify-between items-center'>
-                                <div className='flex flex-col gap-y-1 w-50'>
+                            <div className='flex justify-between items-center gap-1'>
+                                <div className='flex flex-col gap-y-1 w-full'>
                                     <label className='font-bold' htmlFor='date'>Date:</label>
                                     <input className='w-full text-lg p-1 px-2 border-2 border-black rounded-md' id='date' name='date' value={credentials.date} type='date' required onChange={handleChange} />
                                 </div>
 
-                                <div className='flex flex-col gap-y-1 w-50'>
+                                <div className='flex flex-col gap-y-1 w-full'>
                                     <label className='font-bold' htmlFor='time'>Time:</label>
                                     <input className='w-full text-lg p-1 px-2 border-2 border-black rounded-md' id='time' name='time' value={credentials.time} type='time' required onChange={handleChange} />
                                 </div>
                             </div>
 
                             <div className='text-center'>
-                                <button type='submit' className='text-white bg-[#0451cd] w-fit p-1 px-2 rounded-md text-lg cursor-pointer'>SignUp</button>
-                            </div>
-
-                            <div className='text-center text-lg'>
-                                <span>Already Have a Account? <Link className='text-[#0451cd]' to={'/login'}>Login</Link></span>
+                                <button type='submit' className='text-white bg-[#0451cd] w-fit p-1 px-2 rounded-md text-lg cursor-pointer'>Book</button>
                             </div>
                         </form>
                     </div>

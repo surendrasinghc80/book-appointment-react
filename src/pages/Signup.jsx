@@ -1,14 +1,40 @@
 import React, { useState } from 'react'
 import { FaRegEyeSlash } from 'react-icons/fa6'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { FaRegEye } from "react-icons/fa";
+import axios from 'axios';
+import toast from 'react-hot-toast';
+import { ContextState } from '../context';
 
 const Signup = () => {
     const [view, setview] = useState(false)
     const [credentials, setcredentials] = useState({ name: '', phone: '', email: '', password: '' })
+    const { setuser } = ContextState();
+    const navigate = useNavigate();
 
     const handleChange = (e) => {
         setcredentials({ ...credentials, [e.target.name]: e.target.value })
+    }
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+
+        try {
+            const { data } = await axios.post('http://192.168.31.253:8000/api/user/register', { name: credentials.name, email: credentials.email, password: credentials.password, phoneNumber: credentials.phone })
+            if (!data.status === 201) {
+                return toast.error(data.message)
+            }
+
+            setuser(data.user)
+            localStorage.setItem('token', data.token)
+            localStorage.setItem('user', JSON.stringify(data.user))
+            toast.success(data.message)
+            setcredentials({ name: '', email: '', password: '', phone: '' })
+            navigate('/')
+        } catch (error) {
+            console.log(error.response?.data?.message)
+            toast.error(error.response?.data?.message)
+        }
     }
 
     return (
@@ -21,7 +47,7 @@ const Signup = () => {
                     <div className="form-container w-full md:w-[50%] md:h-full bg-white flex flex-col justify-center p-5">
                         <h2 className='text-2xl font-extrabold text-[#0451cd] mb-5 text-center'>Create Account</h2>
 
-                        <form className='flex flex-col gap-y-5 w-full'>
+                        <form className='flex flex-col gap-y-5 w-full' onSubmit={handleSubmit}>
                             <div className='flex flex-col gap-y-1'>
                                 <label className='font-bold' htmlFor='name'>Name:</label>
                                 <input className='text-lg p-1 px-2 border-2 border-black rounded-md' id='name' name='name' value={credentials.name} type='text' placeholder='John Doe' required onChange={handleChange} />

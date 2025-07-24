@@ -5,8 +5,35 @@ import Signup from './pages/Signup';
 import Login from './pages/Login';
 import Services from './pages/Services';
 import Booking from './pages/Booking';
+import AdminAppointments from './pages/AdminAppointments';
+import UserAppointments from './pages/UserAppointments';
+import { ContextState } from './context';
+import { useEffect } from 'react';
 
 function App() {
+  const { user, setuser, token, settoken } = ContextState();
+  const getUser = async () => {
+    const user = localStorage.getItem('user')
+    const token = localStorage.getItem('token')
+
+    if (!user || !token) {
+      setuser();
+      settoken();
+      return
+    }
+
+    setuser(JSON.parse(user))
+    settoken(token)
+  }
+
+  useEffect(() => {
+    getUser();
+  }, [])
+
+  // useEffect(() => {
+  //   getUser();
+  // }, [user, token])
+
   return (
     <>
       <Router>
@@ -16,6 +43,8 @@ function App() {
           <Route exact path='/login' element={<Login />} />
           <Route exact path='/services' element={<Services />} />
           <Route exact path='/booking' element={<Booking />} />
+          <Route exact path='/admin/appointments' element={<AdminAppointments />} />
+          <Route exact path='/my/appointments' element={<UserAppointments />} />
         </Routes>
       </Router>
     </>

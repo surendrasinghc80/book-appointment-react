@@ -78,7 +78,6 @@ const Services = () => {
                             <div className='p-4'><img className='rounded-2xl mb-2' src={service.image} /></div>
                             <h1 className='text-xl font-bold'>{service.name}</h1>
                             <span className='text-center mb-5'>{service.description}</span>
-                            <button className='text-[#0451cd] text-lg cursor-pointer'><u>MORE</u></button>
                         </div>
                     ))}
                 </div>
