@@ -39,12 +39,12 @@ function App() {
       <Router>
         <Routes>
           <Route exact path='/' element={<Home />} />
-          <Route exact path='/register' element={<Signup />} />
-          <Route exact path='/login' element={<Login />} />
+          <Route exact path='/register' element={user ? <Home /> : <Signup />} />
+          <Route exact path='/login' element={user ? <Home /> : <Login />} />
           <Route exact path='/services' element={<Services />} />
-          <Route exact path='/booking' element={<Booking />} />
-          <Route exact path='/admin/appointments' element={<AdminAppointments />} />
-          <Route exact path='/my/appointments' element={<UserAppointments />} />
+          <Route exact path='/booking' element={!user ? <Login /> : <Booking />} />
+          <Route exact path='/admin/appointments' element={!user ? <Login /> : <AdminAppointments />} />
+          <Route exact path='/my/appointments' element={!user ? <Login /> : <UserAppointments />} />
         </Routes>
       </Router>
     </>
