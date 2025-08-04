@@ -9,7 +9,7 @@ import { ContextState } from '../context';
 const Signup = () => {
     const [view, setview] = useState(false)
     const [credentials, setcredentials] = useState({ name: '', phone: '', email: '', password: '' })
-    const { setuser } = ContextState();
+    const { setuser, settoken } = ContextState();
     const navigate = useNavigate();
 
     const handleChange = (e) => {
@@ -20,12 +20,13 @@ const Signup = () => {
         e.preventDefault();
 
         try {
-            const { data } = await axios.post('http://192.168.31.253:8000/api/user/register', { name: credentials.name, email: credentials.email, password: credentials.password, phoneNumber: credentials.phone })
+            const { data } = await axios.post(`${import.meta.env.VITE_BASE_URL}/user/register`, { name: credentials.name, email: credentials.email, password: credentials.password, phoneNumber: credentials.phone })
             if (!data.status === 201) {
                 return toast.error(data.message)
             }
 
             setuser(data.user)
+            settoken(data.token)
             localStorage.setItem('token', data.token)
             localStorage.setItem('user', JSON.stringify(data.user))
             toast.success(data.message)
@@ -39,7 +40,7 @@ const Signup = () => {
 
     return (
         <>
-            <div className='overflow-hidden flex flex-col justify-center items-center h-screen bg-linear-to-r from-white from-50% to-[#0451cd] to-50%'>
+            <div className='overflow-auto flex flex-col justify-center items-center h-screen bg-linear-to-r from-white from-50% to-[#0451cd] to-50%'>
                 <div className='w-[80vw] md:w-[70vw] flex items-center justify-center flex-col md:flex-row'>
                     <div className="image h-[30%] w-full md:w-[50%] md:h-full">
                         <img className='h-full w-full' src='https://images.axios.com/rseGAk89vuIlIcOMwtFzdPfRUzI=/117x0:1197x1080/1600x1600/2023/01/17/1673986436931.jpg' alt='image' />
@@ -55,7 +56,7 @@ const Signup = () => {
 
                             <div className='flex flex-col gap-y-1'>
                                 <label className='font-bold' htmlFor='phone'>Phone No:</label>
-                                <input className='text-lg p-1 px-2 border-2 border-black rounded-md' id='phone' name='phone' value={credentials.phone} type='number' placeholder='9876543210' required onChange={handleChange} />
+                                <input minLength={10} maxLength={10} className='text-lg p-1 px-2 border-2 border-black rounded-md' id='phone' name='phone' value={credentials.phone} type='tel' placeholder='9876543210' required onChange={handleChange} />
                             </div>
 
                             <div className='flex flex-col gap-y-1'>
