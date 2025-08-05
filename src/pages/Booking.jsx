@@ -16,6 +16,20 @@ const Booking = () => {
     specialistIn: "",
     doctorId: "",
   });
+  const [timeLimits, setTimeLimits] = useState({ min: "07:00", max: "19:00" });
+
+  const updateTimeLimits = (dateStr) => {
+    const date = new Date(dateStr);
+    const day = date.getDay(); // 0 = Sunday, 1 = Monday, ..., 6 = Saturday
+
+    if (day === 0 || day === 6) {
+      // Sat-Sun
+      setTimeLimits({ min: "10:00", max: "17:00" });
+    } else {
+      // Mon-Fri
+      setTimeLimits({ min: "07:00", max: "19:00" });
+    }
+  };
 
   const { token } = ContextState();
   const navigate = useNavigate();
@@ -232,7 +246,10 @@ const Booking = () => {
                     value={credentials.date}
                     type="date"
                     required
-                    onChange={handleChange}
+                    onChange={(e) => {
+                      handleChange(e);
+                      updateTimeLimits(e.target.value); // now using the renamed function
+                    }}
                   />
                 </div>
 
@@ -248,6 +265,8 @@ const Booking = () => {
                     value={credentials.time}
                     type="time"
                     required
+                    min={timeLimits.min}
+                    max={timeLimits.max}
                     onChange={handleChange}
                   />
                 </div>

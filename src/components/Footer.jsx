@@ -24,7 +24,7 @@ const Footer = () => {
           </div>
 
           {/* Quick Info */}
-          <div className="flex flex-col md:flex-row items-center gap-4 text-sm text-gray-600">
+          <div className="flex flex-col md:flex-row items-center gap-4 text-md text-gray-800">
             <div className="flex items-center space-x-1">
               <Clock className="h-4 w-4" />
               <span>Mon-Fri: 7AM-7PM | Sat-Sun: 10AM-5PM</span>
